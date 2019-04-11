@@ -9,14 +9,14 @@ int elegirEstadoSegunTablaDeEstados ( char, FILE*, FILE* );
 
 // ** DESARROLLO **
 
-void constantesEnterasProcesarArchivos(FILE *originalTxt, FILE *newTxt) {
+void constantesEnterasProcesarArchivos(FILE *entryFile, FILE *resultsFile) {
 	char c = '0';
-	int estadoFinal =  elegirEstadoSegunTablaDeEstados(c,originalTxt,newTxt);
+	int estadoFinal =  elegirEstadoSegunTablaDeEstados(c,entryFile,resultsFile);
 
-	evaluarEstadoFinal(estadoFinal, newTxt);
+	evaluarEstadoFinal(estadoFinal, resultsFile);
 }
 
-int elegirEstadoSegunTablaDeEstados(char c, FILE* originalTxt, FILE* newTxt) {
+int elegirEstadoSegunTablaDeEstados(char c, FILE* entryFile, FILE* resultsFile) {
 	int estado = 0;
 
 	int tablaDeEstados[7][6] = {{2,1,1,6,6,6},
@@ -27,7 +27,7 @@ int elegirEstadoSegunTablaDeEstados(char c, FILE* originalTxt, FILE* newTxt) {
 							   {5,5,5,5,6,6},
 							   {6,6,6,6,6,6}};
 
-	while((c = fgetc(originalTxt)) != EOF){
+	while((c = fgetc(entryFile)) != EOF){
 
 		if ( c != ',') {
 			switch (c) {
@@ -52,36 +52,36 @@ int elegirEstadoSegunTablaDeEstados(char c, FILE* originalTxt, FILE* newTxt) {
 					estado = tablaDeEstados[estado][5];
 					break;
 			}
-			escribirEnArchivo(c, newTxt);
+			escribirEnArchivo(c, resultsFile);
 		} else {
-			evaluarEstadoFinal(estado, newTxt);
+			evaluarEstadoFinal(estado, resultsFile);
 			estado = 0;
 		}
 	}
 	return estado;
 }
 
-void escribirEnArchivo(char c, FILE* newTxt) {
-	fprintf(newTxt,"%c",c);
+void escribirEnArchivo(char c, FILE* resultsFile) {
+	fprintf(resultsFile,"%c",c);
 }
 
-void evaluarEstadoFinal(int estado, FILE* newTxt) {
+void evaluarEstadoFinal(int estado, FILE* resultsFile) {
 	switch (estado) {
 		case 0:
 			// Si termina en una ',' no escribe nada
 			break;
 		case 1:
-			fprintf(newTxt,"\tDecimal\n");
+			fprintf(resultsFile,"\tDecimal\n");
 			break;
 		case 2:
 		case 3:
-			fprintf(newTxt,"\tOctal\n");
+			fprintf(resultsFile,"\tOctal\n");
 			break;
 		case 5:
-			fprintf(newTxt,"\tHexadecimal\n");
+			fprintf(resultsFile,"\tHexadecimal\n");
 			break;
 		default:
-			fprintf(newTxt,"\tNo reconocido\n");
+			fprintf(resultsFile,"\tNo reconocido\n");
 			break;
 	}
 }

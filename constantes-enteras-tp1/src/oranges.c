@@ -3,13 +3,12 @@
 #include "lib/ConstantesEnteras.h"
 
 int main(){
-	FILE* originalTxt = fopen("text.txt","r");
-	FILE* newTxt = fopen("newText.txt","w");
-// HOLA QUE TAL COMO TE VA
-	constantesEnterasProcesarArchivos(originalTxt, newTxt);
+	FILE* entryFile = fopen("text.txt","r");
+	FILE* resultsFile = fopen("newText.txt","w");
+	constantesEnterasProcesarArchivos(entryFile, resultsFile);
 
-	fclose(originalTxt);
-	fclose(newTxt);
+	fclose(entryFile);
+	fclose(resultsFile);
 
 	return 0;
 }
