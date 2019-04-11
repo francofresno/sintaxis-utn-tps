@@ -5,18 +5,19 @@
 
 void evaluarEstadoFinal ( int, FILE* );
 void escribirEnArchivo ( char, FILE* );
-int elegirEstadoSegunTablaDeEstados ( char, FILE*, FILE* );
+int elegirEstadoSegunTablaDeEstados ( FILE*, FILE* );
 
 // ** DESARROLLO **
 
 void constantesEnterasProcesarArchivos(FILE *entryFile, FILE *resultsFile) {
-	char c = '0';
-	int estadoFinal =  elegirEstadoSegunTablaDeEstados(c,entryFile,resultsFile);
+
+	int estadoFinal =  elegirEstadoSegunTablaDeEstados(entryFile,resultsFile);
 
 	evaluarEstadoFinal(estadoFinal, resultsFile);
 }
 
-int elegirEstadoSegunTablaDeEstados(char c, FILE* entryFile, FILE* resultsFile) {
+int elegirEstadoSegunTablaDeEstados(FILE* entryFile, FILE* resultsFile) {
+	char c = '0';
 	int estado = 0;
 
 	int tablaDeEstados[7][6] = {{2,1,1,6,6,6},
