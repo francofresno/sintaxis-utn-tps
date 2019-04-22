@@ -1,0 +1,9 @@
+129	Decimal
+071	Octal
+0xFF	Hexadecimal
+0	Octal
+1	Decimal
+08	No reconocido
+12A	No reconocido
+0X	No reconocido
+0Xff	Hexadecimal
