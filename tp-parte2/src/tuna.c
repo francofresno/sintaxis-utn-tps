@@ -247,7 +247,7 @@ void estadoSuma(int *ant, int *num, char *elemento, char condicionSalida, nodo *
 //MAIN
 int main(){
 
-	//variables utilisadas para la pila de estados
+	//variables utilizadas para la pila de estados
 	char input;
 	char expresion;
 	nodo *pila = malloc(sizeof(nodo));
