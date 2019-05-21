@@ -7,6 +7,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include <string.h>
 
 struct nodo{
 	struct nodo *sig;
@@ -245,64 +246,77 @@ void estadoSuma(int *ant, int *num, char *elemento, char condicionSalida, nodo *
 }
 
 //MAIN
-int main(int argc, char **argv){
+int main(int argc, char *argv[]){
+	if ( argc > 0 ) {
+		//variables utilizadas para la pila de estados
+		char* input = (char*)malloc(strlen(argv[1]) + 1);
+		strcpy(input, argv[1]);
+		char expresion;
+		nodo *pila = malloc(sizeof(nodo));
+		initialize(&pila);
+		nodo *cuenta = malloc(sizeof(nodo));
+		initCola(&cuenta);
 
-	//variables utilizadas para la pila de estados
-	char input;
-	char expresion;
-	nodo *pila = malloc(sizeof(nodo));
-	initialize(&pila);
-	nodo *cuenta = malloc(sizeof(nodo));
-	initCola(&cuenta);
+		//variables utilizadas para la cola que va a ser la ecuacion
+		int *ant = malloc(sizeof(int));
+		*ant = 0;
+		int *num = malloc(sizeof(int));
+		*num = 0;
+		char * elemento = malloc(sizeof(char));
+		*elemento = 0;
 
-	//variables utilizadas para la cola que va a ser la ecuacion
-	int *ant = malloc(sizeof(int));
-	*ant = 0;
-	int *num = malloc(sizeof(int));
-	*num = 0;
-	char * elemento = malloc(sizeof(char));
-	*elemento = 0;
-
-	//Proceso de apilar y desapilar estados (determina si los caracteres ingresados son aceptados y compone la cola
-	do{
-		input = getchar();
-		expresion = input;
-		while(expresion != 32 && expresion != -1){
-			switch(pop(&pila)){
-				case 'E':
-					expresion = estadoE1(input,&pila,&cuenta);
-					break;
-				case 'e':
-					expresion = estadoE2(input,&pila,&cuenta);
-					break;
-				case 'T':
-					expresion = estadoT1(input,&pila,&cuenta);
-					break;
-				case 't':
-					expresion = estadoT2(input,&pila,&cuenta);
-					break;
-				case 'F':
-					expresion = estadoF(input,&pila,&cuenta);
-					break;
-				case 'N':
-					expresion = estadoN(input,&pila,&cuenta);
+		//Proceso de apilar y desapilar estados (determina si los caracteres ingresados son aceptados y compone la cola
+		int pos = 0;
+		do{
+			expresion = input[pos];
+			while(expresion != 32 && expresion != -1){
+				switch(pop(&pila)){
+					case 'E':
+						expresion = estadoE1(input[pos],&pila,&cuenta);
+						break;
+					case 'e':
+						expresion = estadoE2(input[pos],&pila,&cuenta);
+						break;
+					case 'T':
+						expresion = estadoT1(input[pos],&pila,&cuenta);
+						break;
+					case 't':
+						expresion = estadoT2(input[pos],&pila,&cuenta);
+						break;
+					case 'F':
+						expresion = estadoF(input[pos],&pila,&cuenta);
+						break;
+					case 'N':
+						expresion = estadoN(input[pos],&pila,&cuenta);
+				}
 			}
+			if(expresion == -1){
+				printf("Error -1: expresion no aceptada\n");
+				return -1;
+			}
+			pos++;
+		} while (showTop(pila) != '$');
+
+		//pila se vacio correctamente
+		while(!isEmpty(pila)){
+			printf("%c", pop(&pila));
 		}
-		if(expresion == -1){
-			printf("Error -1: expresion no aceptada\n");
-			return -1;
-		}
-	} while (showTop(pila) != '$');
 
-	//pila se vacio correctamente
-	while(!isEmpty(pila)){
-		printf("%c", pop(&pila));
-	}
+		//realiza las operaciones sobre la cola, leyendo caracter a caracter
+		estadoSuma(ant, num, elemento, '\n', &cuenta);
 
-	//realiza las operaciones sobre la cola, leyendo caracter a caracter
-	estadoSuma(ant, num, elemento, '\n', &cuenta);
+		printf("%i",*num);
 
-	printf("%i",*num);
+		//liberar memoria
+		free(input);
+		free(pila);
+		free(cuenta);
+		free(ant);
+		free(num);
+		free(elemento);
+
+	} else
+		printf("Error -1: expresion no aceptada\n");
 
 	return 0;
 }
