@@ -1,0 +1,32 @@
+# depslib dependency file v1.0
+1560278242 source:c:\program files\gnuwin32\bin\lex.yy.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<io.h>
+	<stdlib.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+
+1559177474 c:\program files\gnuwin32\bin\myfunctions.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1561497173 source:c:\users\lotus\desktop\sintaxis\tp3sintaxis\lex.yy.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<io.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdlib.h>
+	"myFunctions.h"
+	<stdlib.h>
+
+1561497351 c:\users\lotus\desktop\sintaxis\tp3sintaxis\myfunctions.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
